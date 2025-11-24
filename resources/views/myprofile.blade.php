@@ -1,3 +1,5 @@
+@extends('navbar')
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +9,9 @@
     <link rel="stylesheet" href="resources/css/bootstrap.css">
     <title>Document</title>
 </head>
+@section('content')
 <body>
 
 </body>
 </html>
+@endsection
