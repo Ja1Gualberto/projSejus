@@ -1,0 +1,195 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        :root {
+            --color-dark: 0, 0, 0;
+            --color-primary: #193D7A;
+            --color-secondary: #09204C;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+            background-color: var(--color-secondary);
+            background-image: radial-gradient(
+                circle,
+                #3A5E95 0%,
+                var(--color-secondary) 100%
+            );
+            background-attachment: fixed;
+        }
+
+        .login-box {
+            border: 1px solid transparent;
+            border-radius: 25px;
+            padding: 40px;
+            width: 100%;
+            max-width: 420px;
+            min-height: auto;
+            background-color: #ffff;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+
+        .login-box img {
+            display: block;
+            width: 100px;
+            margin: 0 auto 20px auto;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .form-box {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .login-box h2 {
+            color: #333;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .login-box a {
+            text-decoration: none;
+            color: var(--color-secondary);
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(90deg, var(--color-primary), #102857);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 17px;
+            cursor: pointer;
+            margin: 15px 0px 10px 0px;
+            transition: transform .1s ease, box-shadow .1s ease, opacity .1s;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+            box-shadow: 0 4px 10px rgba(var(--color-dark), 0.2);
+        }
+
+        .email-box, .password-box {
+            position: relative;
+            margin-bottom: 25px;
+            padding-top: 5px;
+        }
+
+        .email-box label, .password-box label {
+            display: block;
+            position: relative;
+        }
+        /* Estilos base para todos os inputs de email e password */
+        #email, #password {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            border: 0;
+            font-family: inherit;
+            padding: 16px 12px 0 12px;
+            height: 56px;
+            font-size: 16px;
+            font-weight: 400;
+            background: rgba(var(--color-dark), .02);
+            box-shadow: inset 0 -1px 0 rgba(var(--color-dark), .3);
+            color: rgb(var(--color-dark));
+            transition: all .15s ease;
+            border-radius: 4px;
+        }
+
+        .label {
+            position: absolute;
+            top: 20px;
+            left: 12px;
+            font-size: 16px;
+            color: rgba(var(--color-dark), .5);
+            font-weight: 500;
+            transform-origin: 0 0;
+            transform: translate3d(0, 0, 0);
+            transition: all .2s ease;
+            pointer-events: none;
+        }
+
+        .focus-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(var(--color-dark), .05);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: all .1s ease;
+            border-radius: 4px;
+        }
+
+        #email:hover, #password:hover {
+            background: rgba(var(--color-dark), .04);
+            box-shadow: inset 0 -1px 0 rgba(var(--color-dark), .5);
+        }
+
+        #email:not(:placeholder-shown) + .label,
+        #password:not(:placeholder-shown) + .label {
+            color: rgba(var(--color-dark), .5);
+            /* Sobe e diminui a label */
+            transform: translate3d(0, -12px, 0) scale(.75);
+        }
+
+        /* 3. FOCUS STYLES (quando o input está focado) */
+        #email:focus, #password:focus {
+            background: rgba(var(--color-dark), .05);
+            outline: none;
+            /* Barra de foco na cor primária */
+            box-shadow: inset 0 -2px 0 var(--color-primary);
+        }
+
+        /* 3a. Focus Label: Move e muda a cor para Primary */
+        #email:focus + .label, #password:focus + .label {
+            color: var(--color-primary);
+            /* Sobe e diminui a label */
+            transform: translate3d(0, -12px, 0) scale(.75);
+        }
+
+        /* 3b. Focus Background: A barra que expande */
+        /* O seletor é: input:focus + .label + .focus-bg */
+        #email:focus + .label + .focus-bg, #password:focus + .label + .focus-bg {
+            transform: scaleX(1);
+            transition: all .1s ease;
+        }
+
+        /* Media Query: Mantido seu estilo responsivo */
+        @media (max-width: 420px) {
+            .login-box {
+                padding: 20px;
+                border-radius: 12px;
+            }
+            .login-box img {
+                width: 80px;
+                height: 80px;
+            }
+            .login-box h2 {
+                font-size: 24px;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+        }
