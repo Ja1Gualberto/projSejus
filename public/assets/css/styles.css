@@ -101,7 +101,7 @@ body {
 
 .footer_container {
     display: flex;
-    color: red;
+    color: #FFF;
     justify-content: space-between;
     flex-wrap: wrap;
     max-width: 1140px;
