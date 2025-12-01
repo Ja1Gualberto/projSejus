@@ -6,9 +6,35 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
+class users extends Model
+{
+    use HasFactory;
+
+    protected $table = 'Usuarios';
+
+    protected $fillable = [
+        'user_id',
+        'nome',
+        'data_nascimento',
+        'email',
+        'cpf',
+        'senha',
+        'id_endereco'
+    ];
+
+    public $timestamps = false;
+
+    public function Meus_Jogos()
+    {
+        return $this->hasOne(Meus_Jogos::class, 'id_meus_jogos');
+    }
+
+}
 class User extends Authenticatable
 {
+    protected $primaryKey = 'user_id';
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
@@ -20,15 +46,13 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'id_user',
+        'user_id',
         'nome',
         'data_nascimento',
         'email',
         'cpf',
         'password',
-        'id_endereco',
-        'id_meus_jogos',
-        'id_wishlist'
+        'id_endereco'
     ];
 
     /**

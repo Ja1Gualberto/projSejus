@@ -17,5 +17,11 @@ class Generos extends Model
         'description'
     ];
 
+    public function Jogos()
+    {
+        return $this->hasMany(Generos::class, 'id_genero');
+        return $this->belongsTo(Jogo_genero::class, 'id_jogo');
+    }
+
     public $timestamps = false;
 }

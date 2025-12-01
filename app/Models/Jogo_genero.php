@@ -15,5 +15,9 @@ class Jogo_genero extends Model
 
     public $timestamps = false;
 
-    // Falta Relacionamentos
+    public function Jogo_genero()
+    {
+        return $this->hasMany(Generos::class, 'id_genero');
+        return $this->hasMany(Jogos::class, 'id_jogo');
+    }
 }
