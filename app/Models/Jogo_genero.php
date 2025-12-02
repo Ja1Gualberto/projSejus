@@ -3,21 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Generos;
 
 class Jogo_genero extends Model
 {
     protected $table = 'Jogo_genero';
 
     protected $fillable = [
-        'id_jogo',
-        'id_genero'
+        'jogo_genero_id',
+        'fk_jogo_genero_to_genero',
+        'fk_jogo_genero_to_jogos'
     ];
 
     public $timestamps = false;
 
-    public function Jogo_genero()
+    public function genero()
     {
-        return $this->hasMany(Generos::class, 'id_genero');
-        return $this->hasMany(Jogos::class, 'id_jogo');
+        return $this->belongsTo(Generos::class, 'fk_jogo_genero_to_genero', 'id_genero');
+    }
+    public function joog(){
+        return $this->belongsTo(Jogos::class, 'fk_jogo_genero_to_jogos','id_jogo');
     }
 }

@@ -17,7 +17,7 @@ class Generos extends Model
 
     public function Generos()
     {
-        return $this->belongsTo(Jogo_genero::class, 'id_genero');
+        return $this->hasMany(Jogo_genero::class, 'id_genero');
 
     }
     public $timestamps = false;

@@ -12,64 +12,51 @@ class users extends Model
 {
     use HasFactory;
 
-    protected $table = 'Usuarios';
+    protected $table = 'User';
+    protected $primaryKey = 'user_id';
+    public $timestamps = false;
 
     protected $fillable = [
         'user_id',
-        'nome',
-        'data_nascimento',
+        'name',
         'email',
+        'password',
         'cpf',
-        'senha',
+        'data_nascimento',
         'id_endereco'
     ];
 
-    public $timestamps = false;
 
-    public function Meus_Jogos()
+    public function wishlist()
     {
-        return $this->hasOne(Meus_Jogos::class, 'id_meus_jogos');
+        return $this->hasMany(Wishlist::class, 'fk_wishlist_to_user', 'user_id');
     }
-
+    public function meus_jogos()
+    {
+        return $this->hasMany(Meus_Jogos::class, 'fk_meus_jogos_to_user', 'user_id');
+    }
 }
 class User extends Authenticatable
 {
     protected $primaryKey = 'user_id';
-    /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
-
     public $timestamps = false;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var list<string>
-     */
     protected $fillable = [
         'user_id',
-        'nome',
-        'data_nascimento',
+        'name',
         'email',
-        'cpf',
         'password',
+        'cpf',
+        'data_nascimento',
         'id_endereco'
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var list<string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
     protected function casts(): array
     {
         return [

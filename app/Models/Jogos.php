@@ -13,14 +13,16 @@ class Generos extends Model
         'id_jogo',
         'nome_jogo',
         'valor',
-        'id_genero',
         'description'
     ];
 
-    public function Jogos()
+    public function JogosGenero()
     {
-        return $this->hasMany(Generos::class, 'id_genero');
-        return $this->belongsTo(Jogo_genero::class, 'id_jogo');
+        return $this->hasMany(Jogo_genero::class, 'id_jogo');
+    }
+    public function Wishlist()
+    {
+        return $this->hasMany(Wishlist::class, 'id_jogo');
     }
 
     public $timestamps = false;

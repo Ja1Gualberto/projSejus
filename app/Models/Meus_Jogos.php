@@ -13,15 +13,18 @@ class Meus_Jogos extends Model
 
     protected $fillable = [
         'id_meus_jogos',
-        'id_usuario',
-        'id_jogo',
+        'fk_meus_jogos_to_user',
+        'fk_meus_jogos_to_jogos',
     ];
 
     public $timestamps = false;
 
-    public function Meus_Jogos()
+    public function user()
     {
-        return $this->hasMany(Jogos::class, 'id_jogo');
-        return $this->hasOne(Usuarios::class, 'id_usuario');
+        return $this->belongsTo(User::class, 'fk_meus_jogos_to_user', 'user_id');
+    }
+    public function jogo()
+    {
+        return $this->belongsTo(Jogos::class, 'fk_meus_jogos_to_jogos', 'id_jogo');
     }
 }

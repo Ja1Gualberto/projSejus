@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use App\Models\Jogos;
+use App\Models\User;
 
 class Wishlist extends Model
 {
@@ -10,15 +13,18 @@ class Wishlist extends Model
 
     protected $fillable = [
         'id_wishlist',
-        'id_usuario',
-        'id_jogo',
+        'fk_wishlist_to_user',
+        'fk_wishlist_to_jogos',
     ];
 
     public $timestamps = false;
 
-    public function wishlist()
+    public function user()
     {
-        return $this->hasMany(Jogos::class, 'id_jogo');
-        return $this->hasOne(Usuarios::class, 'id_usuario');
+        return $this->belongsTo(User::class, 'fk_wishlist_to_user', 'user_id');
+    }
+    public function jogo()
+    {
+        return $this->belongsTo(Jogos::class, 'fk_wishlist_to_jogos','id_jogo');
     }
 }
