@@ -49,6 +49,9 @@ body {
     height: auto;
     border-radius: 8px;
 }
+.error-alert{
+    color: red;
+}
 .link-logo {
     display: block;
     width: fit-content;

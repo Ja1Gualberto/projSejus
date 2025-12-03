@@ -21,7 +21,7 @@
                     @csrf
                     <div for="inp" class="email-box">
                         <label for="email">
-                            <input type="email" name="email" id="email" placeholder="&nbsp;">
+                            <input type="email" name="email" id="email" placeholder="&nbsp;" value="{{ old('email') }}">
                             <span class="label">Email</span>
                             <span class="focus-bg"></span>
                         </label>
@@ -34,13 +34,12 @@
                         </label>
                     </div>
                     <button class="submit-btn">Login</button>
-                    {{-- @if (@session('status'))
-                    <span class="error-mensage">{{@session('status')}} </span>
-                    @endif --}}
                 </form>
-                @if (session('status'))
-                    <span class="error-mensage">{{ session('status') }}</span>
-                @endif
+                @error('login')
+                    <div class="error-alert">
+                        {{$message}}
+                    </div>
+                @enderror
                 <p>Ainda não tem conta? <a href="{{Route('registerPage')}}">Cadastre-se</a></p>
             </div>
         </div>

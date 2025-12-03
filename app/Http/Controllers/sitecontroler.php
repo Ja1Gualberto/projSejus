@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 // use \Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Hash;
+use PhpParser\Node\Expr\FuncCall;
 
 class sitecontroler extends Controller
 {
@@ -44,5 +45,11 @@ class sitecontroler extends Controller
     // Função Cadastrar Usuario
     public function registerPage(){
         return view('registerPage');
+    }
+    public function biblioteca(){
+        return view('biblioteca');
+    }
+    public function wishlist(){
+        return view('wishlist');
     }
 }

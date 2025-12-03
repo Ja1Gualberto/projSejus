@@ -12,6 +12,9 @@
 @section('content')
 <body>
 perfil do usuario
+<main>
+    @yield('myprofile')
+</main>
 </body>
 </html>
 @endsection

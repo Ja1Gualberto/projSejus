@@ -14,14 +14,15 @@ class Enderecos extends Model
         protected $fillable = [
             'id_endereco',
             'rua',
-            'numero',
+            'bairro',
             'cidade',
             'estado',
+            'numero',
             'cep'
         ];
         public $timestamps = false;
         public function usuario()
     {
-        return $this->belongsTo(Usuarios::class, 'id_endereco');
+        return $this->hasOne(User::class, 'id_endereco');
     }
 }

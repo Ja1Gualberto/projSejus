@@ -17,6 +17,8 @@ Route::get('/login', [sitecontroler::class, 'login'])->name('login');
 Route::post('/login', [userControler::class, 'authenticate'])->name('authenticate');
 
 Route::get('/myprofile', [sitecontroler::class, 'myprofile'])->name('myProfile');
+Route::get('/myprofile/wishlist', [sitecontroler::class, 'wishlist'])->name('wishlist');
+Route::get('/myprofile/biblioteca', [sitecontroler::class, 'biblioteca'])->name('biblioteca');
 
 Route::get('/registerPage', [sitecontroler::class, 'registerPage'])->name('registerPage');
 Route::post('/registerPage', [userControler::class, 'store']);
