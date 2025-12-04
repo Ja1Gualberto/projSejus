@@ -51,6 +51,19 @@
         />
 
     </section>
+
+    <section class="game-strip">
+        @foreach ($jogos as $Jogos)
+        <x-game-card
+            title="{{ $Jogos->nome_jogo }}"
+            platform="{{ $Jogos->plataforma }}"
+            price="{{ $Jogos->final_price }}"
+            original_price="{{ $Jogos->valor }}"
+            discount="{{ $Jogos->discount }}"
+            image="{{ asset('assets/images/defaultGame.jpg') }}"
+        />
+        @endforeach
+    </section>
 </body>
 
 @endsection
