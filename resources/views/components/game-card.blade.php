@@ -4,7 +4,7 @@
     'price' => 0.00,
     'original_price' => null,
     'discount' => null,
-    'image' => asset('assets/images/defaultGame.jpg'),
+    'image' => asset('assets/images/defaultGame.jpg')
 ])
 
 <div class="game-card">
