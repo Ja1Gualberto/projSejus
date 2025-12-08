@@ -53,15 +53,15 @@
     </section>
 
     <section class="game-strip">
-        @foreach ($jogos as $Jogos)
-        <x-game-card
-            title="{{ $Jogos->nome_jogo }}"
-            platform="{{ $Jogos->plataforma }}"
-            price="{{ $Jogos->final_price }}"
-            original_price="{{ $Jogos->valor }}"
-            discount="{{ $Jogos->discount }}"
-            image="{{ asset('assets/images/defaultGame.jpg') }}"
-        />
+        @foreach ($jogos as $jogo)
+            <x-game-card
+                :title="$jogo->nome_jogo"
+                :platform="$jogo->plataforma"
+                :price="$jogo->final_price"
+                :original_price="$jogo->valor"
+                :discount="$jogo->discount"
+                :image="$jogo->imagem ?? asset('assets/images/defaultGame.jpg')"
+            />
         @endforeach
     </section>
 </body>
