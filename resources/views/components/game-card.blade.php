@@ -7,7 +7,7 @@
     'image' => asset('assets/images/defaultGame.jpg'),
 ])
 
-<div class="game-card">
+<div class="game-card" style="max-width: 600px">
     <img src="{{ $image }}" alt="{{ $title }}">
     <h3>{{ $title ?: 'Título do jogo' }}</h3>
     <p class="platform">{{ $platform ?: 'Plataforma'}}</p>

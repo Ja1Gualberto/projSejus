@@ -1,30 +1,37 @@
 @props([
     'title' => 'Título do jogo',
-    'platform' => 'Plataforma',
+    'plataform' => 'Plataforma',
     'price' => 0.00,
     'original_price' => null,
     'discount' => null,
-    'image' => asset('assets/images/defaultGame.jpg'),
+    'img' => asset('assets/images/defaultGame.jpg'),
 ])
 
-<div class="game-card">
-    <img src="{{$img}}" alt="{{$title}}">
-    <h3>{{$title ?: 'Titulo do jogo'}}</h3>
-    <p class="plataform">{{$plataform ?:'Plataforma'}}</p>
+<div class="card mb-3 shadow-sm">
+    <div class="d-flex align-items-center p-3">
 
-    <p class="price">
-        @if($discount)
-            <span style="text-decoration: line-through; color: #AAA;">
-                R$ {{ number_format((float)$original_price, 2, ',', '.') }}
-            </span>
+        <img class="rounded me-3" style="width: 80px; height: 80px; object-fit: cover;"src="{{$img}}" alt="{{$title}}">
 
-            <span style="margin-left: 8px;">
-                R$ {{ number_format((float)$price, 2, ',', '.') }}
-            </span>
+        <div class="flex-grow-1">
 
-            <span class="discount">-{{ $discount }}%</span>
-        @else
-            R$ {{ number_format($price, 2, ',', '.') }}
-        @endif
-    </p>
+            <h3 class="">{{$title ?: 'Titulo do jogo'}}</h3>
+            <p class="">{{$plataform ?:'Plataforma'}}</p>
+
+            <p class="">
+                @if($discount)
+                <span class="text-muted small me-2" style="text-decoration: line-through">
+                    R$ {{ number_format((float)$original_price, 2, ',', '.') }}
+                </span>
+
+                <span class="fw-bold text-danger me-2">
+                    R$ {{ number_format((float)$price, 2, ',', '.') }}
+                </span>
+
+                <span class="fw-bold text-primary">-{{ $discount }}%</span>
+                @else
+                Valor Pago R$ {{ number_format($price, 2, ',', '.') }}
+                @endif
+            </p>
+        </div>
+    </div>
 </div>
