@@ -3,8 +3,14 @@
     <p class="text-muted">Seus jogos e conteúdos adquiridos</p>
 </div>
 <section class="game-strip">
-    <x-card-biblioteca
-        title=""
-    />
+    @foreach ($jogos as $jogo)
 
+        <x-card-biblioteca
+            :title="$jogo->nome_jogo"
+            :plataform="$jogo->plataforma"
+            :price="$jogo->valor"
+            :img="$jogo->imagem ?? ('assets/images/defaultGame.jpg')"
+        />
+
+    @endforeach
 </section>

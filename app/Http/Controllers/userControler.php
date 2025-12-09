@@ -3,10 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Enderecos;
+use App\Models\Meus_Jogos;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+
 
 class userControler extends Controller
 {
@@ -74,12 +78,27 @@ class userControler extends Controller
     }
 
      public function biblioteca(Request $request){
+        $user = Auth::user();
 
         $dados = [];
         if($request->ajax()){
+
             return view('Perfil.content.biblioteca_content', compact('dados'));
         }
-        return view('Perfil.biblioteca', compact('dados'));
+
+
+        $jogosModel = new Meus_Jogos();
+        $jogos = $jogosModel->getJogosByUserId($user->user_id);
+        $jogos->map(function($jogo){
+            if($jogo->image_path){
+                $jogo->imagem = Storage::disk('s3')->temporaryUrl($jogo->image_path, Carbon::now()->add(5, 'minutes'));
+            }else{
+                $jogo->imagem = asset('assets/images/defaultGame.jpg');
+            }
+            return $jogo;
+        });
+        // dd($jogos);
+        return view('Perfil.biblioteca', ['jogos'=> $jogos]);
     }
 
     public function wishlist(Request $request){
@@ -87,6 +106,7 @@ class userControler extends Controller
         if($request->ajax()){
             return view('Perfil.content.wishlist_content', compact('dados'));
         }
+        
         return view('Perfil.wishlist');
     }
 

@@ -18,6 +18,14 @@ class Meus_Jogos extends Model
         'fk_meus_jogos_to_jogos',
     ];
 
+    public function getJogosByUserId(int $id)
+    {
+        return $this->select('j.*')
+        ->leftJoin('Jogos AS j', 'fk_meus_jogos_to_jogos', 'j.id_jogo')
+        ->where('fk_meus_jogos_to_user', $id)
+        ->get();
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'fk_meus_jogos_to_user', 'user_id');
