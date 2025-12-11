@@ -7,12 +7,13 @@ use App\Models\Jogos;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Storage;
 
 
 class wishlistControler extends Controller
 {
-    public function add(Resquest $resquest, $id_jogo)
+    public function add(Request $resquest, $id_jogo)
     {
         $user = Auth::user();
         $jogo = Jogos::find($id_jogo);
@@ -30,10 +31,21 @@ class wishlistControler extends Controller
         }
         Wishlist::create([
             'fk_wishlist_to_user' => $user->user_id,
-            'fk_wishlist_to_jogo' => $id_jogo
+            'fk_wishlist_to_jogos' => $id_jogo
         ]);
 
         return redirect()->back()->with('sucess', 'Jogo adicionado à wishlist!');
+    }
+
+    public function remove(Request $request, $id_jogo)
+    {
+        $user = Auth::user();
+
+        Wishlist::where('fk_wishlist_to_user', $user->user_id)
+            ->where('fk_wishlist_to_jogos', $id_jogo)
+            ->delete();
+
+            return redirect()->back()->with('sucess', 'Jogo removido da wishlist');
     }
 
     public function wishlist(Request $request){
