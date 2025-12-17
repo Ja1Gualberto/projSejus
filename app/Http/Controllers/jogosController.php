@@ -44,10 +44,10 @@ class JogosController extends Controller
     }
     public function show($id)
     {
-        $jogo = Jogos::findOrFail($id);
+        $jogo = Jogos::with('JogosGenero.genero')->findOrFail($id);
 
         if ($jogo->image_path) {
-        $jogo->imagem = \Illuminate\Support\Facades\Storage::disk('s3')
+            $jogo->imagem = Storage::disk('s3')
             ->temporaryUrl($jogo->image_path, \Carbon\Carbon::now()->addMinutes(5));
         } else {
             $jogo->imagem = asset('assets/images/defaultGame.jpg');
