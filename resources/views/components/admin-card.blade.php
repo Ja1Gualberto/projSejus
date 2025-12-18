@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('assets/css/show_Link.css') }}">
 @props([
 'id' => null,
 'title' => 'Título do jogo',
@@ -42,8 +43,9 @@
                     R$ {{ number_format($price, 2, ',', '.') }}
                 </span>
 
-                <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
-                    Ver
+                <a href="{{ route('jogo.show', $id) }}"
+                    class="btn btn-sm btn-outline-primary rounded-pill px-3 btn-white-on-blue-hover me-2">
+                        Ver
                 </a>
 
                 <a href="{{ route('admin.jogos.edit', ['jogo' => $id]) }}" class="btn btn-sm btn-warning">Editar</a>

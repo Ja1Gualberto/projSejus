@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('assets/css/show_Link.css') }}">
 @props([
 'id' => null,
 'title' => 'Título do jogo',
@@ -11,7 +12,8 @@
 <div class="card h-100 border-0 shadow-sm overflow-hidden group-hover-effect mb-3" style="background: #123A8C">
     <div class="position-relative">
         <a href="{{route('jogo.show', $id)}}">
-            <img src="{{ $img }}" class="card-img-top object-fit-cover mx-auto mt-0" style="height: 200px; width: 100%;" alt="{{ $title }}">
+            <img src="{{ $img }}" class="card-img-top object-fit-cover mx-auto mt-0" style="height: 200px; width: 100%;"
+                alt="{{ $title }}">
         </a>
 
         <span class="badge bg-dark position-absolute top-0 start-0 m-2 shadow-sm">
@@ -19,9 +21,9 @@
         </span>
 
         @if($discount)
-            <span class="badge bg-danger position-absolute top-0 end-0 m-2 shadow-sm">
-                -{{ $discount }}%
-            </span>
+        <span class="badge bg-danger position-absolute top-0 end-0 m-2 shadow-sm">
+            -{{ $discount }}%
+        </span>
         @endif
     </div>
 
@@ -32,9 +34,9 @@
 
         <div class="mt-auto">
             @if($original_price && $original_price > $price)
-                <small class="text-muted text-decoration-line-through" style="color: white !important">
-                    R$ {{ number_format($original_price, 2, ',', '.') }}
-                </small>
+            <small class="text-muted text-decoration-line-through" style="color: white !important">
+                R$ {{ number_format($original_price, 2, ',', '.') }}
+            </small>
             @endif
 
             <div class="d-flex justify-content-between align-items-center">
@@ -42,11 +44,11 @@
                     R$ {{ number_format($price, 2, ',', '.') }}
                 </span>
 
-                <a href="#" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                <a href="{{ route('jogo.show', $id) }}"
+                    class="btn btn-sm btn-outline-primary rounded-pill px-3 btn-white-on-blue-hover me-2">
                     Ver
                 </a>
             </div>
         </div>
     </div>
 </div>
-

@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="{{ asset('assets/css/show_Link.css') }}">
 @props([
 'id',
 'title' => 'Título do jogo',
@@ -61,7 +62,8 @@
 
                 <div>
 
-                    <a href="{{ route('jogo.show', $id) }}" class="btn btn-sm btn-outline-primary rounded-pill px-3 me-2">
+                    <a href="{{ route('jogo.show', $id) }}"
+                    class="btn btn-sm btn-outline-primary rounded-pill px-3 btn-white-on-blue-hover me-2">
                         Ver
                     </a>
 
