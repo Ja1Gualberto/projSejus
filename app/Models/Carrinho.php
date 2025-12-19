@@ -9,6 +9,7 @@ class Carrinho extends Model
 {
     protected $table = 'Carrinho';
     protected $primaryKey = 'carrinho_id';
+    public $timestamps = false;
 
     protected $fillable = [
         'car_id',
@@ -16,12 +17,13 @@ class Carrinho extends Model
         'fk_carrinho_to_jogos'
     ];
 
-     public function getJogosByUserId(int $id)
+    public function getJogosByUserId(int $id)
     {
-        return $this->select('j.*')
-        ->leftJoin('Jogos AS j', 'fk_carrinho_to_jogos', 'j.id_jogo')
-        ->where('fk_carrinho_to_user', $id)
-        ->get();
+        $carrinhoItens = $this->where('fk_carrinho_to_user', $id)
+                            ->with('jogo')
+                            ->get();
+
+        return $carrinhoItens->pluck('jogo')->filter();
     }
     public function user()
     {

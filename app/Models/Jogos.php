@@ -18,11 +18,9 @@ class Jogos extends Model
         'valor',
         'discount',
         'description',
-        //'final_price',
         'image_path'
     ];
 
-    // Preço final já com desconto aplicado
     public function getFinalPriceAttribute()
     {
         if ($this->discount) {

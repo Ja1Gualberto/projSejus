@@ -6,12 +6,73 @@ use App\Models\Carrinho;
 use App\Models\Wishlist;
 use App\Models\Meus_Jogos;
 use App\Models\Jogos;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 
 class carrinhoControler extends Controller
 {
+    public function index()
+    {
+        $user = Auth::user();
+        $carrinhoModel = new Carrinho();
+        $jogosNoCarrinho = $carrinhoModel->getJogosByUserId($user->user_id);
+
+
+        $jogosNoCarrinho->map(function ($jogo) {
+            if ($jogo->image_path) {
+                $jogo->imagem = Storage::disk('s3')->temporaryUrl($jogo->image_path, Carbon::now()->add(5, 'minutes'));
+            } else {
+                $jogo->imagem = asset('assets/images/defaultGame.jpg');
+            }
+            return $jogo;
+        });
+
+        $subtotal = $jogosNoCarrinho->sum('valor');
+
+        $totalFinal = 0;
+        foreach ($jogosNoCarrinho as $jogo) {
+            $totalFinal += $jogo->final_price;
+        }
+        $descontoTotal = $subtotal - $totalFinal;
+
+        return view('carrinho', [
+            'jogos' =>$jogosNoCarrinho,
+            'subtotal' => $subtotal,
+            'descontoTotal' =>$descontoTotal,
+            'totalFinal' => $totalFinal
+        ]);
+    }
+    public function somaPrecoTotal($jogos)
+    {
+        $total = 0;
+        foreach ($jogos as $jogo) {
+            $total += $jogo->final_price;
+        }
+        return $total;
+    }
+
+    public function calcularSubTotal($jogos)
+    {
+        $subtotal = 0;
+        foreach ($jogos as $jogo) {
+            $subtotal += $jogo->valor;
+        }
+        return $subtotal;
+    }
+
+    public function calcularDescontoTotal($jogos)
+    {
+        $descontoTotal = 0;
+        foreach ($jogos as $jogo) {
+            $descontoTotal += ($jogo->valor - $jogo->final_price);
+        }
+        return $descontoTotal;
+    }
+
     // --- FUNÇÃO ADICIONAR AO CARRINHO ---
     public function add(Request $request, $id_jogo)
     {
@@ -28,7 +89,7 @@ class carrinhoControler extends Controller
             return redirect()->back()->with('error', 'Você já possui este jogo na sua biblioteca.');
         }
 
-        // 3. Verifica se o jogo JÁ ESTÁ no carrinho (evitar duplicidade)
+        // 3. Verifica se o jogo JÁ ESTÁ no carrinho
         $jaNoCarrinho = Carrinho::where('fk_carrinho_to_user', $user->user_id)
                                 ->where('fk_carrinho_to_jogos', $id_jogo)
                                 ->exists();
@@ -38,7 +99,7 @@ class carrinhoControler extends Controller
         }
 
         // 4. Adiciona ao Carrinho
-        Carrinho::create([
+        $carrinho = Carrinho::create([
             'fk_carrinho_to_user'  => $user->user_id,
             'fk_carrinho_to_jogos' => $id_jogo
         ]);
@@ -46,8 +107,37 @@ class carrinhoControler extends Controller
         return redirect()->back()->with('success', 'Jogo adicionado ao carrinho!');
     }
 
+    public function remove(Request $request, $id_jogo)
+    {
+        $user = Auth::user();
 
-    // --- FUNÇÃO CONFIRMAR COMPRA (PROCESSAR O CARRINHO INTEIRO) ---
+        // Remove o jogo do carrinho do usuário autenticado
+        $removido = Carrinho::where('fk_carrinho_to_user', $user->user_id)
+                            ->where('fk_carrinho_to_jogos', $id_jogo)
+                            ->delete();
+
+        if ($removido) {
+            return redirect()->back()->with('success', 'Jogo removido do carrinho.');
+        } else {
+            return redirect()->back()->with('error', 'Jogo não encontrado no carrinho.');
+        }
+    }
+
+    public function clearCarrinho()
+    {
+        $user = Auth::user();
+
+        $removidos = Carrinho::where('fk_carrinho_to_user', $user->user_id)->delete();
+
+        if ($removidos)
+        {
+            return redirect()->back()->with('success', $removidos . ' Carrinho esvaziado com sucesso.');
+        } else {
+            return redirect()->back()->with('info', 'Seu carrinho já está vazio.');
+        }
+    }
+
+
     public function confirmCompra()
     {
         $user = Auth::user();

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\carrinhoControler;
 use App\Http\Controllers\wishlistControler;
 use App\Http\Controllers\bibliotecaControler;
 use App\Http\Controllers\userControler;
@@ -15,7 +16,32 @@ Route::get('/about', [sitecontroler::class, 'about'])->name('aboutUs');
 Route::get('/catalogo', [jogosController::class, 'catalogo'])->name('gamesPage');
 
 Route::get('/games/{id}', [jogosController::class, 'show'])->name('jogo.show');
-Route::get('/carrinho',[sitecontroler::class, 'carrinho'])->name('carrinho');
+
+// -- Rotas do Carrinho
+Route::get('/carrinho',[carrinhoControler::class, 'index'])
+    ->name('carrinho')
+    ->middleware('auth');
+Route::post('carrinho/add/{id_jogo}', [carrinhoControler::class, 'add'])
+    ->name('carrinho.add')
+    ->middleware('auth');
+Route::delete('carrinho/remove/{id_jogo}', [carrinhoControler::class, 'remove'])
+    ->name('carrinho.remove')
+    ->middleware('auth');
+Route::delete('carrinho/clear', [carrinhoControler::class, 'clearCarrinho'])
+    ->name('carrinho.clear')
+    ->middleware('auth');
+Route::get('carrinho/somaPrecoTotal', [carrinhoControler::class, 'somaPrecoTotal'])
+    ->name('carrinho.somaPrecoTotal')
+    ->middleware('auth');
+Route::get('carrinho/calcularDescontoTotal', [carrinhoControler::class, 'calcularDescontoTotal'])
+    ->name('carrinho.calcularDescontoTotal')
+    ->middleware('auth');
+Route::get('carrinho/calcularSubTotal', [carrinhoControler::class, 'calcularSubTotal'])
+    ->name('carrinho.calcularSubTotal')
+    ->middleware('auth');
+Route::post('carrinho/confirmCompra', [carrinhoControler::class, 'confirmCompra'])
+    ->name('carrinho.confirmCompra')
+    ->middleware('auth');
 
 // -- Autenticação (Login, Registro e Logout)
 Route::get('/login', [sitecontroler::class, 'login'])->name('login');

@@ -1,8 +1,4 @@
 @section('title', 'Account')
-<div class="mb-5 text-center text-md-start">
-    <h3 class="h3 mb-2">Informações Pessoais</h3>
-    <p class="text-muted">Atualize seus dados de contato e Endereço.</p>
-</div>
 
 <div class="bg-light p-4 rounded-4 mb-5 border">
     <div class="d-flex flex-column gap-4">
