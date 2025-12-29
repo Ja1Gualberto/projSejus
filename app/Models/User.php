@@ -63,10 +63,18 @@ class User extends Authenticatable
                     ->where('fk_meus_jogos_to_jogos', $id_jogo)
                     ->exists();
     }
+
     public function hasInWishlist($id_jogo)
     {
         return $this->wishlist()
                     ->where('fk_wishlist_to_jogos' , $id_jogo)
+                    ->exists();
+    }
+
+    public function hasInCarrinho($id_jogo)
+    {
+        return $this->carrinho()
+                    ->where('fk_carrinho_to_jogos' , $id_jogo)
                     ->exists();
     }
 
@@ -75,6 +83,6 @@ class User extends Authenticatable
         return $this->meus_jogos()->belongsTo(Jogos::class, 'fk_meus_jogos_to_jogos', 'id_jogo');
     }
     public function carrinho(){
-        return $this->carrinho()->hasMany(Carrinho::class, 'fk_carrinho_to_user', 'user_id');
+        return $this->hasMany(Carrinho::class, 'fk_carrinho_to_user', 'user_id');
     }
 }

@@ -34,7 +34,7 @@
                 </div>
                     <hr>
 
-                <div class="d-grid gap-2"> {{-- Usamos d-grid com gap para espaçamento fácil --}}
+                <div class="d-grid gap-2">
                     @foreach ($jogos as $jogo)
                         <x-card-carrinho
                             :id="$jogo->id_jogo"

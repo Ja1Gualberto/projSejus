@@ -73,7 +73,6 @@ class carrinhoControler extends Controller
         return $descontoTotal;
     }
 
-    // --- FUNÇÃO ADICIONAR AO CARRINHO ---
     public function add(Request $request, $id_jogo)
     {
         $user = Auth::user();
@@ -84,19 +83,22 @@ class carrinhoControler extends Controller
             return redirect()->back()->with('error', 'Jogo não encontrado.');
         }
 
-        // 2. Verifica se o usuário JÁ TEM o jogo na biblioteca
+        // 2. Verifica se o usuário já tem o jogo na biblioteca
         if ($user->hasGame($id_jogo)) {
             return redirect()->back()->with('error', 'Você já possui este jogo na sua biblioteca.');
         }
 
-        // 3. Verifica se o jogo JÁ ESTÁ no carrinho
-        $jaNoCarrinho = Carrinho::where('fk_carrinho_to_user', $user->user_id)
-                                ->where('fk_carrinho_to_jogos', $id_jogo)
-                                ->exists();
-
-        if ($jaNoCarrinho) {
+        if ($user->hasInCarrinho($id_jogo)) {
             return redirect()->back()->with('info', 'Este jogo já está no seu carrinho.');
         }
+        // 3. Verifica se o jogo JÁ ESTÁ no carrinho
+        // $jaNoCarrinho = Carrinho::where('fk_carrinho_to_user', $user->user_id)
+        //                         ->where('fk_carrinho_to_jogos', $id_jogo)
+        //                         ->exists();
+
+        // if ($jaNoCarrinho) {
+        //     return redirect()->back()->with('info', 'Este jogo já está no seu carrinho.');
+        // }
 
         // 4. Adiciona ao Carrinho
         $carrinho = Carrinho::create([

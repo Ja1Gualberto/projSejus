@@ -6,11 +6,13 @@
 
     @php
         $isInWishlist = false;
+        $isInCarrinho = false;
         $hasGame = false;
         if (Auth::check())
         {
             $user = Auth::user();
             $isInWishlist = $user->hasInWishlist($jogo->id_jogo);
+            $isInCarrinho = $user->hasInCarrinho($jogo->id_jogo);
             $hasGame = $user->hasGame($jogo->id_jogo);
         }
     @endphp
@@ -60,12 +62,12 @@
                             </div>
 
                             <div class="mb-2">
-                                <span class="h2 fw-bold text-success" style="color: #fff !important">R$ {{ number_format($jogo->final_price, 2, ',', '.') }}
+                                <span class="h2 fw-bold text-success" style="color: #40C057 !important">R$ {{ number_format($jogo->final_price, 2, ',', '.') }}
                                 </span>
                             </div>
                         </div>
                     @else
-                        <span class="h2 fw-bold text-success">
+                        <span class="h2 fw-bold text-success" style="color: #40C057 !important">
                             R$ {{ number_format($jogo->valor, 2, ',', '.') }}
                         </span>
                     @endif
@@ -78,23 +80,24 @@
                     <div class="d-flex gap-2 mt-3" >
 
                         @if (!$hasGame)
-                        <form action="{{route('carrinho.add', $jogo->id_jogo)}}" method="POST">
-                            @csrf
-                            <button type="submit" class="border-0 rounded-2 fw-bold fs-5 d-flex align-items-center me-2" style="padding: 7px 14px; background: #57FF71">
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABC0lEQVR4nNWUQWrCQBiFv9IWddFF6AEqhUK3gniGpgV7ki49g+QQRRDqCbJ04d4LBFeSdFGli26sCGpK4AUCTdMZSYr94F8kef97M8OfgSMjVlmzzzQPqgjYZpo/gcsDA26BRlGQL4Nejmn8Q6WcAwEQKSiXezXNgVPLgCc9BwrL5QSYSZiEmR7RBfCmb11+oSehbxHg6f0EAxxgBeyAa4OAJrDWJLYxZCAjz0A7knaIBS01vQP1Al1HK092cIUlU4MJSqtva578aEsD42TlL0DNNuBZBmONbqk4ujo2wA0VcAZ8WJx/fMgl+AgsqgyonAfgVTejW4LuG1Fm22EJur8PcNUcAncl6P4xX78RkD47z3P/AAAAAElFTkSuQmCC" alt="cart">Comprar
-                            </button>
-                        </form>
+                            @if ($isInCarrinho)
+                                <div>
+                                    <span class="border-0 rounded-2 fw-bold fs-5 d-flex align-items-center me- " style="padding: 9px 19px; background: #0F2D69">
+                                    <i class="fa-solid fa-cart-shopping me-2"></i>Jogo no carrinho
+                                    </span>
+                                </div>
+                            @else
+                                <form action="{{route('carrinho.add', $jogo->id_jogo)}}" method="POST">
+                                    @csrf
+                                        <button type="submit" class="border-0 rounded-2 fw-bold fs-5 d-flex align-items-center me-1" style="padding: 7px 14px; background: #57FF71">
+                                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABC0lEQVR4nNWUQWrCQBiFv9IWddFF6AEqhUK3gniGpgV7ki49g+QQRRDqCbJ04d4LBFeSdFGli26sCGpK4AUCTdMZSYr94F8kef97M8OfgSMjVlmzzzQPqgjYZpo/gcsDA26BRlGQL4Nejmn8Q6WcAwEQKSiXezXNgVPLgCc9BwrL5QSYSZiEmR7RBfCmb11+oSehbxHg6f0EAxxgBeyAa4OAJrDWJLYxZCAjz0A7knaIBS01vQP1Al1HK092cIUlU4MJSqtva578aEsD42TlL0DNNuBZBmONbqk4ujo2wA0VcAZ8WJx/fMgl+AgsqgyonAfgVTejW4LuG1Fm22EJur8PcNUcAncl6P4xX78RkD47z3P/AAAAAElFTkSuQmCC" alt="cart">Comprar
+                                        </button>
+                                </form>
+                            @endif
                         @else
                         <div>
-                            <span>Já possui uma chave desse jogo</span>
+                            <span class="border-0 rounded-2 fw-bold d-flex align-items-center me" style="padding: 10px 14px; background: #0F2D69; font-size: 16px !important">Já possui uma chave desse jogo</span>
                         </div>
-                        <div>
-                            <button class="border-0 rounded-2 fw-bold fs-5 d-flex align-items-center me-2" style="padding: 7px 14px; background: #57FF71">
-                                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAACXBIWXMAAAsTAAALEwEAmpwYAAABC0lEQVR4nNWUQWrCQBiFv9IWddFF6AEqhUK3gniGpgV7ki49g+QQRRDqCbJ04d4LBFeSdFGli26sCGpK4AUCTdMZSYr94F8kef97M8OfgSMjVlmzzzQPqgjYZpo/gcsDA26BRlGQL4Nejmn8Q6WcAwEQKSiXezXNgVPLgCc9BwrL5QSYSZiEmR7RBfCmb11+oSehbxHg6f0EAxxgBeyAa4OAJrDWJLYxZCAjz0A7knaIBS01vQP1Al1HK092cIUlU4MJSqtva578aEsD42TlL0DNNuBZBmONbqk4ujo2wA0VcAZ8WJx/fMgl+AgsqgyonAfgVTejW4LuG1Fm22EJur8PcNUcAncl6P4xX78RkD47z3P/AAAAAElFTkSuQmCC" alt="cart">Comprar
-
-                            </button>
-                        </div>
-
                         @endif
 
                         @if ($isInWishlist)
@@ -181,6 +184,33 @@
             </div>
         </div>
     </div>
+
+{{-- <div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="successModalLabel">✅ Jogo Adicionado</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+            </div>
+            <div class="modal-body">
+                <span>O jogo foi adicionado ao seu carrinho!</span>
+            </div>
+        </div>
+    </div>
+</div> --}}
+
+@push('scripts')
+    <script>
+        @if (session('success'))
+
+        const successModalElemnet = document.getElementById('successModal');
+
+        if(successModalElemnet)
+        {
+            const successModal = new bootstrap.Modal(successModalElemnet);
+            successModal.show();
+        }
+        @endif
+    </script>
+@endpush
 @endsection
-
-

@@ -104,7 +104,7 @@
             ©Copyright - <a href=""> SejusPlay Template </a> by <a href="">RJ</a>
         </div>
     </footer>
-
+    @stack('scripts')
 </body>
 
 </html>

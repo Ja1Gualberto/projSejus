@@ -20,8 +20,8 @@ class Carrinho extends Model
     public function getJogosByUserId(int $id)
     {
         $carrinhoItens = $this->where('fk_carrinho_to_user', $id)
-                            ->with('jogo')
-                            ->get();
+                             ->with('jogo')
+                             ->get();
 
         return $carrinhoItens->pluck('jogo')->filter();
     }
