@@ -12,7 +12,7 @@
 
     <form action="{{ route('admin.jogos.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
-        
+
         {{-- Nome jogo --}}
         <div class="mb-3">
             <label for="nome_jogo" class="form-label">Nome do Jogo</label>
@@ -23,6 +23,11 @@
         <div class="mb-3">
             <label for="plataforma" class="form-label">Plataforma</label>
             <input type="text" name="plataforma" id="plataforma" class="form-control" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Descrição</label>
+            <input type="text" name="description" id="description" class="form-control" required>
         </div>
 
         {{-- Valor --}}

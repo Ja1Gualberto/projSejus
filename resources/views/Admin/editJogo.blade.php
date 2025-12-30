@@ -26,6 +26,11 @@
             <input type="text" name="plataforma" id="plataforma" class="form-control" value="{{ old('plataforma', $jogo->plataforma) }}" required>
         </div>
 
+        <div class="mb-3">
+            <label for="description" class="form-label">Descrição</label>
+            <input type="text" name="description" id="description" class="form-control" value="{{ old('description', $jogo->description) }}" required>
+        </div>
+
         {{-- Valor Preço original --}}
         <div class="mb-3">
             <label for="valor" class="form-label">Preço Original</label>
@@ -46,7 +51,7 @@
                 <img src="{{ $jogo->imagem }}" alt="{{ $jogo->nome_jogo }}">
             @endif
         </div>
-        
+
         {{-- Botão salvar --}}
         <button type="submit" class="btn btn-success">Atualizar</button>
         <a href="{{ route('admin.jogos.index') }}" class="btn btn-secondary">Cancelar</a>

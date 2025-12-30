@@ -32,6 +32,7 @@ class adminJogosController extends Controller
             'plataforma' => 'required|string|max:255',
             'valor' => 'required|numeric|min:0',
             'discount' => 'nullable|numeric|min:0|max:100',
+            'description' => 'nullable|string|max:1000',
             'image_path' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
@@ -71,6 +72,7 @@ class adminJogosController extends Controller
             'nome_jogo' => 'required|string|max:255',
             'plataforma' => 'required|string|max:255',
             'valor' => 'required|numeric|min:0',
+            'description' => 'nullable|string|max:1000',
             'discount' => 'nullable|numeric|min:0|max:100',
             'image_path' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
